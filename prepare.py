@@ -15,16 +15,17 @@ def get_connection(db, user=user, host=host, password=password):
     
     return f'mysql+pymysql://{user}:{password}@{host}/{db}'
 
+    
+    
 
 
-
-def get_telco_data():
+def get_telco():
     '''
     This function reads in the telco data from the Codeup db
     and returns a pandas DataFrame with all columns.
     '''
     
-    sql_query = 'select customer_id, monthly_charges, tenure, total_charges from customers where contract_type_id = 3;'
+    sql_query = 'select * from customers where contract_type_id = 3;'
     return pd.read_sql(sql_query, get_connection('telco_churn'))
 
 
@@ -34,19 +35,22 @@ def get_telco_data():
 
 def clean_telco(df):
     '''
-    clean_telco will take in a dataframe, cleans the data by converting total_charges from object to int, replacing new customer total_charges from Nan to zero, as well as dropping customer_id for exploration purposes.
+    clean_telco will take in a dataframe, cleans the data by converting total_charges from object to int, replacing new customer total_charges from Nan to zero, as well as sets customer_id to index.
     '''
+    
+    features = ['customer_id', 'monthly_charges', 'tenure', 'total_charges']
+    df = df[features]
     
     df.total_charges = pd.to_numeric(df.total_charges, errors='coerce').astype('float64')
     df = df.fillna(0)
     
-    df = df.drop(columns='customer_id')
-    
+    df = df.set_index("customer_id")
+   
     return df
 
-    
-    
-    
+
+
+
 
 def split_telco(df):
     """
@@ -68,14 +72,21 @@ def split_telco(df):
 
 
 
-def wrangle_telco():
+def prepare_telco():
     '''
-    wrangle_telco will: 
+    prepare_telco will: 
     - read in telco dataset for 2 year contracted customer as a pandas DataFrame,
     - clean the data
     - split the data
-    return: the three split pandas dataframes-train/validate/test, stratified on total_charges
+    return: the three split pandas dataframes-train/validate/test
     '''
     
-    df = clean_telco(get_telco_data())
+    df = clean_telco(get_telco())
     return split_telco(df)
+
+
+
+
+
+def scaled_telco():
+    
