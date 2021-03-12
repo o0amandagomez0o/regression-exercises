@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
+import sklearn.preprocessing
 from sklearn.model_selection import train_test_split
 from env import host, user, password
 
@@ -88,5 +89,28 @@ def prepare_telco():
 
 
 
-def scaled_telco():
+def scaled_telco(train, validate, test):
+    '''
+    scaled_telco will:
+    - take in 3 split dataframes and
+    - perform sklearn MinMax Scaler on them
+    return: the three split pandas dataframes-train_scaled/validate_scaled/test_scaled
+    '''
+    # make the scaler
+    scaler = sklearn.preprocessing.MinMaxScaler()
+    
+    # fit the scaler on TRAIN dataset
+    scaler.fit(train)
+    
+    # apply the scaler on all three sets
+    train_scaled = scaler.transform(train)
+    validate_scaled = scaler.transform(validate)
+    test_scaled = scaler.transform(test)
+    
+    # turn arrays into pd.DataFrames
+    train_scaled = pd.DataFrame(train_scaled, columns=train.columns)
+    validate_scaled = pd.DataFrame(validate_scaled, columns=train.columns)
+    test_scaled = pd.DataFrame(test_scaled, columns=train.columns)
+    
+    return train_scaled, validate_scaled, test_scaled
     
