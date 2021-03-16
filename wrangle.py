@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 import os
+import sklearn.preprocessing
 from sklearn.model_selection import train_test_split
 from env import host, user, password
 
@@ -26,7 +29,6 @@ def get_telco_data():
     
     sql_query = 'select customer_id, monthly_charges, tenure, total_charges from customers where contract_type_id = 3;'
     return pd.read_sql(sql_query, get_connection('telco_churn'))
-
 
 
 
@@ -79,3 +81,8 @@ def wrangle_telco():
     
     df = clean_telco(get_telco_data())
     return split_telco(df)
+
+
+
+
+

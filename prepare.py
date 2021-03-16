@@ -108,9 +108,9 @@ def scaled_telco(train, validate, test):
     test_scaled = scaler.transform(test)
     
     # turn arrays into pd.DataFrames
-    train_scaled = pd.DataFrame(train_scaled, columns=train.columns)
-    validate_scaled = pd.DataFrame(validate_scaled, columns=train.columns)
-    test_scaled = pd.DataFrame(test_scaled, columns=train.columns)
+    train_scaled = pd.DataFrame(train_scaled, columns=train.columns, index = train.index)
+    validate_scaled = pd.DataFrame(validate_scaled, columns=train.columns, index = validate.index)
+    test_scaled = pd.DataFrame(test_scaled, columns=train.columns, index = test.index)
     
     return train_scaled, validate_scaled, test_scaled
     
