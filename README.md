@@ -15,6 +15,7 @@ ___
 | [evaluate.py](evaluate.py)                                           | This python file contains twelve functions to evaluate data using regression errors.                 |
 | [feature_engineering.ipynb](feature_engineering.ipynb)               | This is my Jupyter Notebook I have used to answer `feature_engineering` exercises.                   |
 | [feature_engineering.py](feature_engineering.py)                     | This python file contains functions used in `feature_engineering.ipynb` exercises.                   |
+| [regression_modeling.ipynb](regression_modeling.ipynb)               | This is my Jupyter Notebook I have used to answer `regression` exercises.                            |
 
 
 

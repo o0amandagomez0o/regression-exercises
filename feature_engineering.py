@@ -150,7 +150,7 @@ def prep4class(df, target):
     # scale data 
     X_train_scaled, X_validate_scaled, X_test_scaled = min_max_scale(X_train, X_validate, X_test, numeric_cols)
     
-    return X_train, X_train_scaled, y_train, X_validate_scaled, y_validate, X_test_scaled, y_test
+    return X_train, X_train_scaled, y_train, X_validate, X_validate_scaled, y_validate, X_test, X_test_scaled, y_test
 
 
 
