@@ -151,3 +151,55 @@ def reg_error_metrics(target, yhat):
     
     
 
+def select_kbest(X, y, n):
+    '''
+    select_kbest takes in the 
+    predictors (X), 
+    the target (y), and 
+    the number of features to select (k) and 
+    returns the names of the top k selected features based on the SelectKBest class
+    '''
+    
+    # parameters: f_regression stats test
+    f_selector = SelectKBest(f_regression, k= n)
+    
+    # find the top 2 X-feats correlated with y
+    f_selector.fit(X_train_scaled, y_train)
+    
+    # boolean mask of whether the column was selected or not. 
+    feature_mask = f_selector.get_support()
+    
+    # get list of top K features. 
+    f_feature = X_train_scaled.iloc[:,feature_mask].columns.tolist()
+    
+    return f_feature
+
+
+
+
+
+def rfe(X, y, n):
+    '''
+    rfe takes in the 
+    predictors (X), 
+    the target (y), and 
+    the number of features to select (k) and 
+    returns the names of the top k selected features based on the SelectKBest class
+    '''
+    
+    # initialize the ML algorithm
+    lm = LinearRegression()
+    
+    # create the rfe object, indicating the ML object (lm) and the number of features I want to end up with. 
+    rfe = RFE(lm, n)
+    
+    # fit the data using RFE
+    rfe.fit(X_train_scaled,y_train)  
+    
+    # get the mask of the columns selected
+    feature_mask = rfe.support_
+    
+    # get list of the column names. 
+    rfe_feature = X_train_scaled.iloc[:,feature_mask].columns.tolist()
+    
+    return rfe_feature
